@@ -53,8 +53,9 @@ function alta {
 function baja {
   read -p "Nombre de Usuario a Eliminar: " usuario
   if grep -q ":$usuario$" usuarios.csv; then
+    linea=$(grep ":$usuario$" usuarios.csv)
     grep -v ":$usuario$" usuarios.csv > temp && mv temp usuarios.csv
-    echo "BORRADO $usuario el $(date +"%d/%m/%Y %H:%M")" >> log.log
+    echo "BORRADO $linea el $(date +"%d/%m/%Y %H:%M")" >> log.log
     echo "Usuario $usuario eliminado."
   else
     echo "El usuario no existe."
@@ -71,6 +72,8 @@ function mostrar_log {
   cat log.log
 }
 
+
+printf "%s\n" "----------$(date +"%d/%m/%Y %H:%M")----------" >> log.log
 # Llamada al login al inicio del script
 login "$1"
 
